@@ -2,11 +2,15 @@
 
 struct Vector
 {
-public:
     const float x;
     const float y;
 
     Vector(const float x, const float y) : x(x), y(y){};
+
+    static const Vector unit(const float &angle)
+    {
+        return Vector(cos(angle), sin(angle));
+    }
 
     const float getNorm() const
     {
@@ -20,22 +24,22 @@ public:
         return angle;
     };
 
-    const Vector operator+(const Vector other) const
+    const Vector operator+(const Vector &other) const
     {
         return Vector(x + other.x, y + other.y);
     };
 
-    const Vector operator-(const Vector other) const
+    const Vector operator-(const Vector &other) const
     {
         return Vector(x - other.x, y - other.y);
     };
 
-    const Vector operator*(const float scalar) const
+    const Vector operator*(const float &scalar) const
     {
         return Vector(x * scalar, y * scalar);
     }
 
-    const Vector operator/(const float scalar) const
+    const Vector operator/(const float &scalar) const
     {
         return Vector(x / scalar, y / scalar);
     }
