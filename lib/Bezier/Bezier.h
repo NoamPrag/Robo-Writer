@@ -13,7 +13,7 @@ struct Bezier
           endControl(endControl),
           end(end){};
 
-    const Vector evaluate(const float &t)
+    const Vector evaluate(const float &t) const
     {
         const float oneMinusT = 1 - t;
 
