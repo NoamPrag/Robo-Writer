@@ -37,10 +37,13 @@ const Vector getPosition(const int &rightAngle, const int &leftAngle)
 };
 
 // Returns an array with two elements - right is first
-const int getAngleBetweenArmAndPenPosition(const Vector &position, const Vector &servoPosition)
+const int getServoAngle(const Vector &position, const Vector &servoPosition)
 {
-    const float distanceBetweenServoAndPen = (position - servoPosition).getNorm();
-    return acos(distanceBetweenServoAndPen * distanceBetweenServoAndPen + elbowDistance * elbowDistance - forearmDistance * forearmDistance / 2 * distanceBetweenServoAndPen * elbowDistance);
+    const Vector servoToPen = position - servoPosition;
+    const float distanceBetweenServoAndPen = servoToPen.getNorm();
+    // Cosine law
+    const float angleBetweenArmAndPenPosition = acos(distanceBetweenServoAndPen * distanceBetweenServoAndPen + elbowDistance * elbowDistance - forearmDistance * forearmDistance / 2 * distanceBetweenServoAndPen * elbowDistance);
+    return servoToPen.getAngle() + angleBetweenArmAndPenPosition;
 };
 
 void setup()
