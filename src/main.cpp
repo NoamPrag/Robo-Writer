@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include <Vector.h>
+#include <Bezier.h>
 
 const int rightServoPin = 9;
 const int leftServoPin = 10;
