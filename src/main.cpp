@@ -12,8 +12,8 @@ const Vector leftServoPosition = Vector(0, 0);
 const float elbowDistance = 0;
 const float forearmDistance = 0;
 
-Servo right;
-Servo left;
+Servo rightServo;
+Servo leftServo;
 
 const Vector getPosition(const int &rightAngle, const int &leftAngle)
 {
@@ -47,10 +47,28 @@ const int getServoAngle(const Vector &position, const Vector &servoPosition)
     return servoToPen.getAngle() + angleBetweenArmAndPenPosition;
 };
 
+const Bezier paths[] = {};
+const float Δt = 0.05;
+
 void setup()
 {
-    right.attach(rightServoPin);
-    left.attach(leftServoPin);
+    // Reset
+    rightServo.attach(rightServoPin);
+    leftServo.attach(leftServoPin);
+
+    // Trace Bezier paths by evaluating in small steps and sending angles to servos
+    for (const Bezier path : paths)
+    {
+        for (float t = 0; t <= 1; t += Δt)
+        {
+            const Vector currentWantedPosition = path.evaluate(t);
+            const float rightServoWantedAngle = getServoAngle(currentWantedPosition, rightServoPosition);
+            const float leftServoWantedAngle = getServoAngle(currentWantedPosition, leftServoPosition);
+
+            rightServo.write(rightServoWantedAngle);
+            leftServo.write(leftServoWantedAngle);
+        }
+    }
 };
 
 void loop(){};
