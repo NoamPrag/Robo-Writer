@@ -5,6 +5,11 @@ struct Vector
     const float x;
     const float y;
 
+    static const Vector zero()
+    {
+        return Vector(0, 0);
+    }
+
     Vector(const float x, const float y) : x(x), y(y){};
 
     static const Vector unit(const float &angle)
@@ -42,5 +47,27 @@ struct Vector
     const Vector operator/(const float &scalar) const
     {
         return Vector(x / scalar, y / scalar);
+    }
+
+    // TODO check all assignment operators
+
+    const Vector operator=(const Vector &other)
+    {
+        return other;
+    }
+
+    const Vector operator+=(const Vector &other)
+    {
+        return Vector(this->x + other.x, this->y + other.y);
+    }
+
+    const Vector operator-=(const Vector &other)
+    {
+        return Vector(this->x - other.x, this->y - other.y);
+    }
+
+    const Vector operator*=(const float &scalar)
+    {
+        return Vector(this->x * scalar, this->y * scalar);
     }
 };
