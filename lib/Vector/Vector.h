@@ -2,8 +2,8 @@
 
 struct Vector
 {
-    const float x;
-    const float y;
+    float x;
+    float y;
 
     static const Vector zero()
     {
@@ -47,27 +47,5 @@ struct Vector
     const Vector operator/(const float &scalar) const
     {
         return Vector(x / scalar, y / scalar);
-    }
-
-    // TODO check all assignment operators
-
-    const Vector operator=(const Vector &other)
-    {
-        return other;
-    }
-
-    const Vector operator+=(const Vector &other)
-    {
-        return Vector(this->x + other.x, this->y + other.y);
-    }
-
-    const Vector operator-=(const Vector &other)
-    {
-        return Vector(this->x - other.x, this->y - other.y);
-    }
-
-    const Vector operator*=(const float &scalar)
-    {
-        return Vector(this->x * scalar, this->y * scalar);
     }
 };

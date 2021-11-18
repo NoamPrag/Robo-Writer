@@ -29,7 +29,7 @@ struct Bezier
             const float pointFactor = tFactor *
                                       oneMinusTFactor * (i == 1 || i == 2 ? 3 : 1);
 
-            result += points[i] * pointFactor;
+            result = result + (points[i] * pointFactor);
 
             oneMinusTFactor /= oneMinusT;
             tFactor *= t;
