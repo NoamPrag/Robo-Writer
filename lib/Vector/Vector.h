@@ -1,5 +1,8 @@
 #include <Arduino.h>
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 struct Vector
 {
     float x;
@@ -49,3 +52,5 @@ struct Vector
         return Vector(x / scalar, y / scalar);
     }
 };
+
+#endif

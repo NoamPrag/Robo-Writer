@@ -1,19 +1,13 @@
 #include <Arduino.h>
-#include <Servo.h>
-#include <Vector.h>
 #include <Bezier.h>
+#include <Vector.h>
+#include <ServoUtil.h>
 
-const int rightServoPin = 9;
-const int leftServoPin = 10;
+const Vector rightServoPosition = Vector(7.25, 0);
+const Vector leftServoPosition = Vector(-7.25, 0);
 
-const Vector rightServoPosition = Vector(0, 0);
-const Vector leftServoPosition = Vector(0, 0);
-
-const float elbowDistance = 0;
-const float forearmDistance = 0;
-
-Servo rightServo;
-Servo leftServo;
+const float elbowDistance = 18;
+const float forearmDistance = 24;
 
 const Vector getPosition(const int &rightAngle, const int &leftAngle)
 {
@@ -44,31 +38,44 @@ const int getServoAngle(const Vector &position, const Vector &servoPosition)
     const float distanceBetweenServoAndPen = servoToPen.getNorm();
     // Cosine law
     const float angleBetweenArmAndPenPosition = acos(distanceBetweenServoAndPen * distanceBetweenServoAndPen + elbowDistance * elbowDistance - forearmDistance * forearmDistance / 2 * distanceBetweenServoAndPen * elbowDistance);
+    Serial.println(distanceBetweenServoAndPen * distanceBetweenServoAndPen + elbowDistance * elbowDistance - forearmDistance * forearmDistance / (2 * distanceBetweenServoAndPen * elbowDistance));
     return servoToPen.getAngle() + angleBetweenArmAndPenPosition;
 };
 
 const Bezier paths[] = {};
-const float Δt = 0.05;
+const float dt = 0.05;
 
 void setup()
 {
+    Serial.begin(9600);
+
     // Reset
-    rightServo.attach(rightServoPin);
-    leftServo.attach(leftServoPin);
+    // attachServos();
+
+    const Vector position = Vector(0, 24);
+
+    const float rightAngle = getServoAngle(position, rightServoPosition);
+    // const float leftAngle = getServoAngle(position, leftServoPosition);
+
+    // Serial.println(rightAngle);
+    // Serial.println(leftAngle);
+
+    // setRightServo(rightAngle);
+    // setLeftServo(leftAngle);
 
     // Trace Bezier paths by evaluating in small steps and sending angles to servos
-    for (const Bezier path : paths)
-    {
-        for (float t = 0; t <= 1; t += Δt)
-        {
-            const Vector currentWantedPosition = path.evaluate(t);
-            const float rightServoWantedAngle = getServoAngle(currentWantedPosition, rightServoPosition);
-            const float leftServoWantedAngle = getServoAngle(currentWantedPosition, leftServoPosition);
+    // for (const Bezier path : paths)
+    // {
+    //     for (float t = 0; t <= 1; t += dt)
+    //     {
+    //         const Vector currentWantedPosition = path.evaluate(t);
+    //         const float rightServoWantedAngle = getServoAngle(currentWantedPosition, rightServoPosition);
+    //         const float leftServoWantedAngle = getServoAngle(currentWantedPosition, leftServoPosition);
 
-            rightServo.write(rightServoWantedAngle);
-            leftServo.write(leftServoWantedAngle);
-        }
-    }
+    //         rightServo.write(rightServoWantedAngle);
+    //         leftServo.write(leftServoWantedAngle);
+    //     }
+    // }
 };
 
 void loop(){};
