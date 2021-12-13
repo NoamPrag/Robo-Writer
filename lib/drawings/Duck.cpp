@@ -2,7 +2,7 @@
 #include <Bezier.h>
 
 const Bezier duckDrawing[] = {
-    Bezier(Vector(2332, 3350), Vector(-490, -41), Vector(-745, -274), Vector(-718, -658)),
+    Bezier(Vector(0, 0), Vector(-490, -41), Vector(-745, -274), Vector(-718, -658)),
     Bezier(Vector(-718, -658), Vector(9, -122), Vector(27, -206), Vector(76, -349)),
     Bezier(Vector(76, -349), Vector(72, -207), Vector(83, -260), Vector(58, -280)),
     Bezier(Vector(58, -280), Vector(-7, -6), Vector(-62, -20), Vector(-123, -33)),

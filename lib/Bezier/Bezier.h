@@ -22,7 +22,7 @@ struct Bezier
 
         Vector result = Vector::zero();
 
-        static Vector points[4] = {start, end, startControl, endControl};
+        Vector points[4] = {start, startControl, endControl, end};
 
         for (int i = 0; i < 4; i++)
         {
