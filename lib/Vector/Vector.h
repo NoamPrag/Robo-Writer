@@ -22,13 +22,13 @@ struct Vector
 
     const float getNorm() const
     {
-        static const float norm = sqrtf(x * x + y * y);
+        const float norm = sqrtf(x * x + y * y);
         return norm;
     };
 
     const float getAngle() const
     {
-        static const float angle = atan2(y, x);
+        const float angle = atan2(y, x);
         return angle;
     };
 
