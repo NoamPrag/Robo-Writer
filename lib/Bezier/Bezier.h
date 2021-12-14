@@ -17,7 +17,7 @@ struct Bezier
         delete[] this->points;
     }
 
-    const Vector evaluate(const float &t) const
+    const Vector operator()(const float &t) const
     {
         Vector result = Vector::zero();
 

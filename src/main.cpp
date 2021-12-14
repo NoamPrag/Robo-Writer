@@ -24,7 +24,7 @@ void setup()
 
         for (float t = 0; t <= 1; t += dt)
         {
-            const Vector currentWantedPosition = path.evaluate(t);
+            const Vector currentWantedPosition = path(t);
 
             const float rightServoWantedAngle = getRightServoAngle(currentWantedPosition);
             const float leftServoWantedAngle = getLeftServoAngle(currentWantedPosition);
@@ -32,7 +32,7 @@ void setup()
             setRightServo(rightServoWantedAngle);
             setLeftServo(leftServoWantedAngle);
 
-            dt = dx / pathDerivative.evaluate(t).getNorm();
+            dt = dx / pathDerivative(t).getNorm();
         }
     }
 };
