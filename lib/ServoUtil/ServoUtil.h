@@ -73,3 +73,12 @@ const int getLeftServoAngle(const Vector &position)
     const float angleBetweenArmAndPen = getAngleInTriangle(elbowDistance, distanceBetweenServoAndPen, forearmDistance);
     return 180 - degrees(servoToPen.getAngle() + angleBetweenArmAndPen);
 };
+
+const void setPosition(const Vector &position)
+{
+    const float rightServoAngle = getRightServoAngle(position);
+    const float leftServoAngle = getLeftServoAngle(position);
+
+    setRightServo(rightServoAngle);
+    setLeftServo(leftServoAngle);
+}
