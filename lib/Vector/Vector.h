@@ -15,6 +15,8 @@ struct Vector
 
     Vector(const float x, const float y) : x(x), y(y){};
 
+    Vector() : x(0), y(0){};
+
     static const Vector unit(const float &angle)
     {
         return Vector(cos(angle), sin(angle));
@@ -50,6 +52,25 @@ struct Vector
     const Vector operator/(const float &scalar) const
     {
         return Vector(x / scalar, y / scalar);
+    }
+
+    const void operator=(const Vector &other)
+    {
+        this->x = other.x;
+        this->y = other.y;
+    }
+
+    const void operator+=(const Vector &other)
+    {
+        this->x += other.x;
+        this->y += other.y;
+    }
+
+    const void print() const
+    {
+        Serial.print(x);
+        Serial.print(", \t");
+        Serial.println(y);
     }
 };
 

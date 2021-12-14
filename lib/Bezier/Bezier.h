@@ -1,40 +1,44 @@
 #include <Vector.h>
+#include <Bernstein.h>
 
 struct Bezier
 {
-    const Vector start, startControl, endControl, end;
+    const Vector *points;
+    const int pointsCount;
+    const int bezierDegree;
 
-    Bezier(const Vector &start,
-           const Vector &startControl,
-           const Vector &endControl,
-           const Vector &end)
-        : start(start),
-          startControl(startControl),
-          endControl(endControl),
-          end(end){};
+    Bezier(const Vector *points) : pointsCount(sizeof(points[0]) / sizeof(points)), bezierDegree(pointsCount - 1)
+    {
+        this->points = points;
+    };
+
+    ~Bezier()
+    {
+        delete[] this->points;
+    }
 
     const Vector evaluate(const float &t) const
     {
-        const float oneMinusT = 1 - t;
-
-        float oneMinusTFactor = powf(1 - t, 3);
-        float tFactor = 1;
-
         Vector result = Vector::zero();
 
-        Vector points[4] = {start, startControl, endControl, end};
-
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < pointsCount; i++)
         {
-            const float pointFactor = tFactor *
-                                      oneMinusTFactor * (i == 1 || i == 2 ? 3 : 1);
-
-            result = result + (points[i] * pointFactor);
-
-            oneMinusTFactor /= oneMinusT;
-            tFactor *= t;
+            const float pointFactor = Bernstein(bezierDegree, i)(t);
+            result += (points[i] * pointFactor);
         }
 
         return result;
+    }
+
+    const Bezier derivative() const
+    {
+        Vector *derivativePoints = new Vector[bezierDegree]{};
+
+        for (int i = 0; i < bezierDegree; i++)
+        {
+            derivativePoints[i] = (this->points[i + 1] - this->points[i]) * this->bezierDegree;
+        }
+
+        return Bezier(derivativePoints);
     }
 };
