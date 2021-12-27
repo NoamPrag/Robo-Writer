@@ -1,6 +1,9 @@
 #include <Vector.h>
 #include <Bernstein.h>
 
+#ifndef BEZIER_H
+#define BEZIER_H
+
 struct Bezier
 {
     const Vector *points;
@@ -42,3 +45,5 @@ struct Bezier
         return Bezier(derivativePoints);
     }
 };
+
+#endif

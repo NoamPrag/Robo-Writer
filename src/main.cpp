@@ -2,17 +2,19 @@
 #include <Bezier.h>
 #include <Vector.h>
 #include <ServoUtil.h>
+#include <Duck.h>
 
-const Bezier paths[] = {
-    Bezier(new Vector[4]{Vector(-10, 0), Vector(30, 20), Vector(-30, 20), Vector(10, 0)}),
-    Bezier(new Vector[4]{Vector(10, 0), Vector(30, 20), Vector(-30, 20), Vector(-10, 0)}),
-};
+// const Bezier paths[] = {
+//     Bezier(new Vector[4]{Vector(-10, 0), Vector(30, 20), Vector(-30, 20), Vector(10, 0)}),
+//     Bezier(new Vector[4]{Vector(10, 0), Vector(30, 20), Vector(-30, 20), Vector(-10, 0)}),
+// };
 
 constexpr int buttonPin = 2;
 
-constexpr float dt = 0.001;
+constexpr float dt = 0.005;
 
-const Vector drawingOffset = Vector(0, 10);
+const Vector drawingOffset = Vector(10, 25);
+const float drawingScaleFactor = 0.01;
 
 void setup()
 {
@@ -20,7 +22,7 @@ void setup()
     attachServos();
     pinMode(buttonPin, INPUT_PULLUP);
 
-    setPosition(paths[0](0) + drawingOffset);
+    setPosition(duckDrawing[0](0) * drawingScaleFactor + drawingOffset);
     delay(1000);
     while (digitalRead(buttonPin))
     {
@@ -28,13 +30,11 @@ void setup()
     };
 
     // Trace Bezier paths by evaluating in small steps and sending angles to servos
-    for (const Bezier path : paths)
+    for (const Bezier path : duckDrawing)
     {
-        const Bezier pathDerivative = path.derivative();
-
         for (float t = 0; t <= 1; t += dt)
         {
-            const Vector currentWantedPosition = path(t) + drawingOffset;
+            const Vector currentWantedPosition = path(t) * drawingScaleFactor + drawingOffset;
 
             setPosition(currentWantedPosition);
         }

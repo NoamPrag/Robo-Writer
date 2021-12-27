@@ -1,5 +1,8 @@
 #include <Arduino.h>
 
+#ifndef BERNSTEIN_H
+#define BERNSTEIN_H
+
 const int factorial(const int &n)
 {
     if (n <= 1)
@@ -33,3 +36,5 @@ struct Bernstein
         return binomialCoefficient * pow(t, k) * pow(1 - t, n - k);
     }
 };
+
+#endif
