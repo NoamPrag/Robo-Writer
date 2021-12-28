@@ -83,10 +83,11 @@ for index, data_point in data_points_iter:
 # printing a c array of the beziers
 print("{")
 for bezier in beziers:
-    print(" Bezier(")
+    print(" Bezier(new Vector[4]{")
     for index, point in enumerate(bezier):
-        comma = "," if index != 3 else ""
-        print(f"    Vector({point.real}, {point.imag}){comma}")
-    print(" ),")
+        comma = ", " if index != 3 else ""
+        print(f"Vector({point.real}, {point.imag}){comma}", end="")
+    print("}),", end="")
+    print()
 
 print("};")
