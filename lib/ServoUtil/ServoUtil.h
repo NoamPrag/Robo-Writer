@@ -14,8 +14,8 @@ const int convertAngleFromServo(const int &angle, const int &servoMin, const int
 Servo rightServo;
 Servo leftServo;
 
-const int rightServoPin = 9;
-const int leftServoPin = 10;
+constexpr int rightServoPin = 9;
+constexpr int leftServoPin = 10;
 
 const void attachServos()
 {
@@ -23,11 +23,11 @@ const void attachServos()
     leftServo.attach(leftServoPin);
 }
 
-const int rightServoMin = 117;
-const int rightServoMax = -2;
+constexpr int rightServoMin = 117;
+constexpr int rightServoMax = -2;
 
-const int leftServoMin = 63;
-const int leftServoMax = 181;
+constexpr int leftServoMin = 63;
+constexpr int leftServoMax = 181;
 
 const void setRightServo(const int &angle)
 {
@@ -42,8 +42,9 @@ const void setLeftServo(const int &angle)
 const Vector rightServoPosition = Vector(7.25, 0);
 const Vector leftServoPosition = Vector(-7.25, 0);
 
-const float elbowDistance = 18;
-const float forearmDistance = 24;
+constexpr float elbowDistance = 18;
+constexpr float forearmDistance = 24;
+constexpr float totalArmLength = elbowDistance + forearmDistance;
 
 const float getAngleInTriangle(const float &near1, const float &near2, const float &opposite)
 {
@@ -73,6 +74,27 @@ const int getLeftServoAngle(const Vector &position)
     const float angleBetweenArmAndPen = getAngleInTriangle(elbowDistance, distanceBetweenServoAndPen, forearmDistance);
     return 180 - degrees(servoToPen.getAngle() + angleBetweenArmAndPen);
 };
+
+// * ass triangle = angle-side-side (where the angle is the largest in the triangle)
+const float getSideInAssTriangle(const float &largeSide, const float &otherSide, const float &angle)
+{
+    // * largeSide ^ 2 = side ^ 2 + otherSide ^ 2 - 2*side*otherSide*cos(angle)
+    const float angleInRadians = radians(angle);
+    return otherSide * cos(angleInRadians) + sqrt(pow(largeSide, 2) - pow(otherSide * sin(angleInRadians), 2));
+}
+
+// * Returns the max distance from the origin available for a given direction.
+const float getMaxDistance(const int &angle)
+{
+    const float originToServoDistance = angle > 90 ? rightServoPosition.getNorm() : leftServoPosition.getNorm();
+    return getSideInAssTriangle(totalArmLength, originToServoDistance, angle);
+}
+
+// * Returns true if the mechanism is physically capable of reaching the given position.
+const bool positionValid(const Vector &position)
+{
+    return (position - rightServoPosition).getNorm() <= totalArmLength && (position - leftServoPosition).getNorm() <= totalArmLength;
+}
 
 const void setPosition(const Vector &position)
 {
