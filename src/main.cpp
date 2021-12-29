@@ -14,7 +14,7 @@ constexpr int buttonPin = 2;
 constexpr float dt = 0.005;
 
 const Vector drawingOffset = Vector(10, 25);
-const float drawingScaleFactor = 0.01;
+const float drawingScaleFactor = 0.004;
 
 void setup()
 {
