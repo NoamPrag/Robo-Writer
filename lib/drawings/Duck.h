@@ -1,7 +1,8 @@
 #include <Vector.h>
 #include <Bezier.h>
+#include <Drawing.h>
 
-const Bezier duckDrawing[] = {
+const Bezier duckCruves[] = {
     Bezier(new Vector[4]{Vector(0.0, 0.0), Vector(-490.0, -41.0), Vector(-745.0, -274.0), Vector(-718.0, -658.0)}),
     Bezier(new Vector[4]{Vector(-718.0, -658.0), Vector(-709.0, -780.0), Vector(-691.0, -864.0), Vector(-642.0, -1007.0)}),
     Bezier(new Vector[4]{Vector(-642.0, -1007.0), Vector(-570.0, -1214.0), Vector(-559.0, -1267.0), Vector(-584.0, -1287.0)}),
@@ -36,3 +37,8 @@ const Bezier duckDrawing[] = {
     Bezier(new Vector[4]{Vector(803.0, -475.0), Vector(780.0, -361.0), Vector(721.0, -245.0), Vector(651.0, -174.0)}),
     Bezier(new Vector[4]{Vector(651.0, -174.0), Vector(512.0, -33.0), Vector(298.0, 24.0), Vector(0.0, 0.0)}),
 };
+
+constexpr float duckScaleFactor = 0.004;
+const Vector duckOffset = Vector(10, 25);
+
+const Drawing duckDrawing = Drawing(duckCruves, duckScaleFactor, duckOffset);

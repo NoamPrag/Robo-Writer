@@ -1,7 +1,8 @@
 #include <Vector.h>
 #include <Bezier.h>
+#include <Drawing.h>
 
-const Bezier mustacheDrawing[] = {
+const Bezier mustacheCurves[] = {
     Bezier(new Vector[4]{Vector(0.0, 0.0), Vector(-223.0, -18.0), Vector(-380.0, -153.0), Vector(-620.0, -535.0)}),
     Bezier(new Vector[4]{Vector(-620.0, -535.0), Vector(-804.0, -828.0), Vector(-967.0, -899.0), Vector(-1155.0, -770.0)}),
     Bezier(new Vector[4]{Vector(-1155.0, -770.0), Vector(-1208.0, -734.0), Vector(-1237.0, -705.0), Vector(-1292.0, -633.0)}),
@@ -27,3 +28,9 @@ const Bezier mustacheDrawing[] = {
     Bezier(new Vector[4]{Vector(410.0, -29.0), Vector(356.0, -50.0), Vector(346.0, -50.0), Vector(315.0, -33.0)}),
     Bezier(new Vector[4]{Vector(315.0, -33.0), Vector(265.0, -6.0), Vector(121.0, 9.0), Vector(0.0, 0.0)}),
 };
+
+constexpr float mustacheScaleFactor = 0.004f;
+
+const Vector mustacheOffset = Vector(0, 25);
+
+const Drawing mustacheDrawing = Drawing(mustacheCurves, mustacheScaleFactor, mustacheOffset);
